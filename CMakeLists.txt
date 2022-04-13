@@ -1,30 +1,24 @@
 #===============================================================================
-cmake_minimum_required(VERSION 3.21)
-
+cmake_minimum_required(VERSION 3.20)
 #===============================================================================
-project(gmds VERSION 1.0.0 LANGUAGES CXX)
+project(toy VERSION 1.0.0 LANGUAGES CXX)
 #===============================================================================
 # Standard options
-include(GNUInstallDirs)
 set(CMAKE_CXX_STANDARD 14)
 #===============================================================================
-set(PROJECT_INSTALL_NAME ${PROJECT_NAME})
+# LIBRARIES ARE INSTALLED USING THE VERSION NUMBER OF OUR PROJECT
+set(PROJECT_INSTALL_NAME ${PROJECT_NAME}-${PROJECT_VERSION})
 #===============================================================================
 # Project options
 option(WITH_A "component A is activated" ON)
 option(WITH_B "component B is activated" ON)
 #===============================================================================
-# specific macros are given here
-
-
+# specific macros are given in this file
+include(GNUInstallDirs)
 include(cmake/project_macros.cmake)
-if(WITH_A)
-    add_subdirectory(A)
-endif()
-if(WITH_B)
-    add_subdirectory(B)
-endif()
-
+#===============================================================================
+add_subdirectory_if(A WITH_A)
+add_subdirectory_if(B WITH_B)
 #===============================================================================
 # INSTALLATION PROCEDURE
 #===============================================================================
@@ -32,15 +26,11 @@ endif()
 set(DESTINATION_DIR ${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_INSTALL_NAME})
 
 # Do not modify below!
-install(
-        EXPORT ${PROJECT_NAME}-config
+install(EXPORT ${PROJECT_NAME}-config
         NAMESPACE ${PROJECT_NAME}::
         DESTINATION ${DESTINATION_DIR})
 
 configure_file(${PROJECT_NAME}-config.cmake.in
         ${PROJECT_NAME}-config.cmake
         @ONLY)
-
-install(FILES "${CMAKE_BINARY_DIR}/${PROJECT_NAME}-config.cmake"
-        DESTINATION ${DESTINATION_DIR})
-
+#===============================================================================

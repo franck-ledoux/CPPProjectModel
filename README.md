@@ -49,7 +49,7 @@ The next script shows the whole process where our librarie is installed and used
 ```bash
 git clone ...
 cmake -S ../cmake_example -B build_lib -DCMAKE_INSTALL_PREFIX=local_install
-cmake --build build_lib --target install
+cmake --build build_lib --target local_install
 cmake -S ../cmake/example/test_link -B build_exe -DCMAKE_PREFIX_PATH=$('pwd')/local_install 
 cmake --build build_exe
 ```

@@ -1,9 +1,11 @@
 //---------------------------------------------------
-#include <toy/b/B.h>
+#ifndef CMAKE_EXAMPLE_B_H
+#define CMAKE_EXAMPLE_B_H
 //---------------------------------------------------
-#include <iostream>
+class B {
+public:
+    void g();
+};
 //---------------------------------------------------
-void B::g(){
-    std::cout<<"I'm in B function"<<std::endl;
-}
+#endif //CMAKE_EXAMPLE_B_H
 //---------------------------------------------------

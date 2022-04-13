@@ -1,5 +1,5 @@
 set(LIB_NAME B)
-set(INC_FILES inc/gmds/b/B.h)
+set(INC_FILES inc/toy/b/B.h)
 set(SRC_FILES src/B.cpp)
 
 add_library(${LIB_NAME})

@@ -9,9 +9,19 @@ target_include_directories(${COMP_NAME} PUBLIC
         $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_INSTALL_NAME}>)
 
 install(TARGETS ${COMP_NAME}
-        EXPORT gmds-config
+        EXPORT ${PROJECT_NAME}-config
         ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
 
 install(DIRECTORY ${CMAKE_CURRENT_LIST_DIR}/inc/
         DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_INSTALL_NAME})
+endmacro()
+#==============================================================================
+# Conditional add of a subdirectory
+#==============================================================================
+# COMP_NAME    component name
+# COND         Boolean value to add or not COMP_NAME
+macro(add_subdirectory_if COMP_NAME COND)
+    if(${COND})
+        add_subdirectory(${COMP_NAME})
+    endif()
 endmacro()

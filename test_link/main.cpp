@@ -1,6 +1,6 @@
 #include <iostream>
-#include <gmds/a/A.h>
-#include <gmds/b/B.h>
+#include <toy/a/A.h>
+#include <toy/b/B.h>
 int main() {
     std::cout << "Hello, World!" << std::endl;
     A a;
