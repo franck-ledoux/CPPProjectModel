@@ -61,9 +61,9 @@ jobs:
     - name: Install
       run: |
         if ${{ matrix.config == 'Release'}}; then
-            cmake --install build --prefix ${{github.workspace}}/local_install --config Release
+            cmake --install build_lib --prefix ${{github.workspace}}/local_install --config Release
         else
-            cmake --install build --prefix ${{github.workspace}}/local_install --config Debug
+            cmake --install build_lib --prefix ${{github.workspace}}/local_install --config Debug
         fi
 
     - name: Test lib install
