@@ -18,6 +18,7 @@ option(ENABLE_COV "enable code coverage" ON)
 # specific macros are given in this file
 include(GNUInstallDirs)
 include(cmake/project_macros.cmake)
+set(INSTALL_GTEST OFF)
 #===============================================================================
 # Coverage require to run testing codes
 if(ENABLE_COV)
