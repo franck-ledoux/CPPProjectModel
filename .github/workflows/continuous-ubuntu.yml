@@ -44,6 +44,7 @@ jobs:
       # does not seem to be re-evaluated during the call to cmake --install
       run: >
         cmake $GITHUB_WORKSPACE -DCMAKE_BUILD_TYPE=${{ matrix.config }} 
+        -DENABLE_TEST= OFF -DENABLE_COV=OFF
         -DCMAKE_PREFIX_PATH="${{github.workspace}}/spack/opt/spack/lcov;"
         -DCMAKE_INSTALL_PREFIX=${{github.workspace}}/local_install
 
