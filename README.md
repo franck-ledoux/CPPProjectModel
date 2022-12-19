@@ -1,5 +1,8 @@
 # C++ multilbrary
 
+![Install-link Ubuntu](https://github.com/franck-ledoux/CPPProjectModel/actions/workflows/install-link-ubuntu.yml/badge.svg)
+![unit-testing Ubuntu](https://github.com/franck-ledoux/CPPProjectModel/actions/workflows/unit-coverage-ubuntu.yml/badge.svg)
+
 This project shows how usual tools like cmake, gtest, ctest, cpack and github can be used togther to manage a *multi-library* project.
 
 ## Project structure
