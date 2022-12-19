@@ -2,7 +2,7 @@
 #include <toy/a/A.h>
 #include <iostream>
 //---------------------------------------------------
-void A::f(){
-    std::cout<<"I'm in A function"<<std::endl;
+int A::f(int x){
+    return x+1;
 }
 //---------------------------------------------------

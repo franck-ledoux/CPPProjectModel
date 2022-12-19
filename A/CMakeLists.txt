@@ -6,4 +6,8 @@ set(SRC_FILES src/A.cpp)
 add_library(${LIB_NAME})
 target_sources(${LIB_NAME} PRIVATE ${SRC_FILES})
 #===============================================================================
-component_install(${LIB_NAME})
+if(ENABLE_TEST)
+    add_subdirectory(tst)
+endif()
+#===============================================================================
+prj_component_install(${LIB_NAME})

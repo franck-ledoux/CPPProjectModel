@@ -12,13 +12,39 @@ set(PROJECT_INSTALL_NAME ${PROJECT_NAME}-${PROJECT_VERSION})
 # Project options
 option(WITH_A "component A is activated" ON)
 option(WITH_B "component B is activated" ON)
+option(ENABLE_TEST "enable unit testing" ON)
+option(ENABLE_COV "enable code coverage" ON)
 #===============================================================================
 # specific macros are given in this file
 include(GNUInstallDirs)
 include(cmake/project_macros.cmake)
 #===============================================================================
-add_subdirectory_if(A WITH_A)
-add_subdirectory_if(B WITH_B)
+# Coverage require to run testing codes
+if(ENABLE_COV)
+    set(ENABLE_TEST ON)
+endif()
+#===============================================================================
+if(ENABLE_TEST)
+    include(FetchContent)
+    set(FETCHCONTENT_UPDATES_DISCONNECTED ON CACHE BOOL "")
+    FetchContent_Declare(
+            googletest
+            URL https://github.com/google/googletest/archive/03597a01ee50ed33e9dfd640b249b4be3799d395.zip
+    )
+
+    # For Windows: Prevent overriding the parent project's compiler/linker settings
+    set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
+    FetchContent_MakeAvailable(googletest)
+    include(GoogleTest)
+    enable_testing()
+endif()
+#===============================================================================
+if(ENABLE_COV)
+    prj_activate_coverage()
+endif()
+#===============================================================================
+prj_add_subdirectory_if(A WITH_A)
+prj_add_subdirectory_if(B WITH_B)
 #===============================================================================
 # INSTALLATION PROCEDURE
 #===============================================================================
