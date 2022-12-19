@@ -1,4 +1,4 @@
-name: install-link-ubuntu
+name: unit-coverage-ubuntu
 
 on:
   workflow_dispatch:
@@ -57,6 +57,14 @@ jobs:
       run: cmake --build . --config Debug
 
     - name: Test
+      shell: bash
+      working-directory: ${{github.workspace}}/build_lib
       run: |
         make test
+
+    - name: Coverage
+      shell: bash
+      working-directory: ${{github.workspace}}/build_lib
+      run: |
+        make coverage
 
