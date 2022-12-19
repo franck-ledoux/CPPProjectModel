@@ -33,7 +33,6 @@ jobs:
       # subsequent commands
       run: cmake -E make_directory ${{github.workspace}}/build_lib
 
-
     - name: Configure CMake
       # Use a bash shell so we can use the same syntax for environment variable
       # access regardless of the host operating system
@@ -58,6 +57,17 @@ jobs:
       run: cmake --build . --config ${{ matrix.config }}
 
 
+    - name: UnitTesting
+      needs: Build
+      if: ${{ matrix.config == 'Debug'}}
+      # Use a bash shell so we can use the same syntax for environment variable
+      # access regardless of the host operating system
+      shell: bash
+      working-directory: ${{github.workspace}}/build_lib
+      # Execute the build.  You can specify a specific target with "--target <NAME>"
+      run: make test
+
+
     - name: Install
       run: |
         if ${{ matrix.config == 'Release'}}; then
@@ -67,6 +77,7 @@ jobs:
         fi
 
     - name: Test lib install
+      needs: Install
       run: |
         cmake -E make_directory ${{github.workspace}}/test_link
         cd ${{github.workspace}}/test_link/
