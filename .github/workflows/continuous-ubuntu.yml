@@ -47,41 +47,42 @@ jobs:
         -DCMAKE_PREFIX_PATH="${{github.workspace}}/spack/opt/spack/lcov;"
         -DCMAKE_INSTALL_PREFIX=${{github.workspace}}/local_install
 
-    build:
-      name: Build
-      # Use a bash shell so we can use the same syntax for environment variable
-      # access regardless of the host operating system
-      shell: bash
-      working-directory: ${{github.workspace}}/build_lib
-      # Execute the build.  You can specify a specific target with "--target <NAME>"
-      run: cmake --build . --config ${{ matrix.config }}
+  build:
+    name: Build
+    # Use a bash shell so we can use the same syntax for environment variable
+    # access regardless of the host operating system
+    shell: bash
+    working-directory: ${{github.workspace}}/build_lib
+    # Execute the build.  You can specify a specific target with "--target <NAME>"
+    run: cmake --build . --config ${{ matrix.config }}
 
 
-    unit:
-      name: UnitTesting
-      if: ${{ matrix.config == 'Debug'}}
-      # Use a bash shell so we can use the same syntax for environment variable
-      # access regardless of the host operating system
-      shell: bash
-      working-directory: ${{github.workspace}}/build_lib
-      # Execute the build.  You can specify a specific target with "--target <NAME>"
-      run: make test
 
-    install_libs:
-      name: Install
-      run: |
-        if ${{ matrix.config == 'Release'}}; then
-            cmake --install build_lib --prefix ${{github.workspace}}/local_install --config Release
-        else
-            cmake --install build_lib --prefix ${{github.workspace}}/local_install --config Debug
-        fi
+  unit:
+    name: UnitTesting
+    if: ${{ matrix.config == 'Debug'}}
+    # Use a bash shell so we can use the same syntax for environment variable
+    # access regardless of the host operating system
+    shell: bash
+    working-directory: ${{github.workspace}}/build_lib
+    # Execute the build.  You can specify a specific target with "--target <NAME>"
+    run: make test
 
-    test_lib_install:
-      name: Test lib install
-      run: |  
-        cmake -E make_directory ${{github.workspace}}/test_link
-        cd ${{github.workspace}}/test_link/
-        cmake -DCMAKE_PREFIX_PATH="${{github.workspace}}/local_install" -S ${{github.workspace}}/test_link -B build_exe
-        cmake --build build_exe
-        cd build_exe
-        ctest
+  install_libs:
+    name: Install
+    run: |
+      if ${{ matrix.config == 'Release'}}; then
+         cmake --install build_lib --prefix ${{github.workspace}}/local_install --config Release
+      else
+        cmake --install build_lib --prefix ${{github.workspace}}/local_install --config Debug
+      fi
+
+  test_lib_install:
+    name: Test lib install
+    run: |  
+      cmake -E make_directory ${{github.workspace}}/test_link
+      cd ${{github.workspace}}/test_link/
+      cmake -DCMAKE_PREFIX_PATH="${{github.workspace}}/local_install" -S ${{github.workspace}}/test_link -B build_exe
+      cmake --build build_exe
+      cd build_exe
+      ctest
