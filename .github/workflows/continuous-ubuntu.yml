@@ -78,7 +78,7 @@ jobs:
 
     test_lib_install:
       name: Test lib install
-      run: |
+      run: |  
         cmake -E make_directory ${{github.workspace}}/test_link
         cd ${{github.workspace}}/test_link/
         cmake -DCMAKE_PREFIX_PATH="${{github.workspace}}/local_install" -S ${{github.workspace}}/test_link -B build_exe
