@@ -4,8 +4,8 @@
 int main() {
     std::cout << "Hello, World!" << std::endl;
     A a;
-    a.f();
+    a.f(3);
     B b;
-    b.g();
+    b.g(2);
     return 0;
 }
