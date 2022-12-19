@@ -10,8 +10,8 @@ add_executable(test_link  main.cpp)
 target_link_libraries(${PROJECT_NAME} PRIVATE toy::A toy::B)
 
 
-#enable_testing()
-#add_test(
-#        NAME link_on_lib
-#        COMMMAND $<TARGET_FILE:test_link>
-#)
+enable_testing()
+add_test(
+        NAME link_on_lib
+        COMMAND $<TARGET_FILE:test_link>
+)
