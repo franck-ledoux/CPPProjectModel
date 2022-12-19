@@ -1,4 +1,4 @@
-#C++ multilbrary
+# C++ multilbrary
 
 This project shows how usual tools like cmake, gtest, ctest, cpack and github can be used togther to manage a *multi-library* project.
 
@@ -11,8 +11,8 @@ component\
   CMakeLists.txt
 ```
 Each component corresponds to a library that can be compiled as being static or shared (CMake paramater).
-The global settings of the project are given in the first lines of the `CMakeLists.txt`.
-
+The global settings of the project are given in the first lines of the `CMakeLists.txt`. We have here two components 
+in this example: `A` and `B`.
 
 ## How to build and install the library
 CMake is used as a "build" system. We deploy a set of libraries that can be activated or not 
@@ -60,17 +60,17 @@ our libraries that will be done in the local directory `build_lib`.
 - The last line build our test executable.
 
 
+## Continuous integration
+This project is hosted by github and use Github actions for CI. The only target that is checked is ubuntu. In order to
+see how it works, please take a look to the `.github/worflows` directory where the yaml file `continous-ubuntu.yml`
+describes the CI process.
+
 ## Testing 
 Test are performed at two coarse-grained levels: 
 - unitary, with using goolge test
 - system, with using ctest
 ## Code coverage
 Code coverage is simply ensured using `gcov`
-
-TODO
-
-## Continuous integration 
-This project is hosted by github and use Github actions.
 
 TODO
 
