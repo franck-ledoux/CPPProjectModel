@@ -48,6 +48,14 @@ jobs:
         -DCMAKE_INSTALL_PREFIX=${{github.workspace}}/local_install
 
   build:
+    name: ${{ matrix.config }}
+      # The CMake configure and build commands are platform agnostic and should work equally
+      # well on Linux, Windows or Mac.
+      runs-on: ubuntu-latest
+      strategy:
+        fail-fast: false
+        matrix:
+          config: [ Release, Debug ]
     steps:
       - uses: actions/checkout@v2
         with:
@@ -63,6 +71,14 @@ jobs:
       run: cmake --build . --config ${{ matrix.config }}
 
   unit:
+    name: ${{ matrix.config }}
+      # The CMake configure and build commands are platform agnostic and should work equally
+      # well on Linux, Windows or Mac.
+      runs-on: ubuntu-latest
+      strategy:
+        fail-fast: false
+        matrix:
+          config: [ Release, Debug ]
     steps:
       - uses: actions/checkout@v2
         with:
@@ -79,6 +95,14 @@ jobs:
       run: make test
 
   install_libs:
+    name: ${{ matrix.config }}
+      # The CMake configure and build commands are platform agnostic and should work equally
+      # well on Linux, Windows or Mac.
+      runs-on: ubuntu-latest
+      strategy:
+        fail-fast: false
+        matrix:
+          config: [ Release, Debug ]
     steps:
       - uses: actions/checkout@v2
         with:
@@ -93,6 +117,14 @@ jobs:
         fi
 
   test_lib_install:
+    name: ${{ matrix.config }}
+      # The CMake configure and build commands are platform agnostic and should work equally
+      # well on Linux, Windows or Mac.
+      runs-on: ubuntu-latest
+      strategy:
+        fail-fast: false
+        matrix:
+          config: [ Release, Debug ]
     steps:
       - uses: actions/checkout@v2
         with:
