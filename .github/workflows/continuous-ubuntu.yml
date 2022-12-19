@@ -1,4 +1,4 @@
-name: continuous-ubuntu
+name: install-link-ubuntu
 
 on:
   workflow_dispatch:
@@ -47,21 +47,6 @@ jobs:
         -DCMAKE_PREFIX_PATH="${{github.workspace}}/spack/opt/spack/lcov;"
         -DCMAKE_INSTALL_PREFIX=${{github.workspace}}/local_install
 
-  build:
-    name: ${{ matrix.config }}
-      # The CMake configure and build commands are platform agnostic and should work equally
-      # well on Linux, Windows or Mac.
-      runs-on: ubuntu-latest
-      strategy:
-        fail-fast: false
-        matrix:
-          config: [ Release, Debug ]
-    steps:
-      - uses: actions/checkout@v2
-        with:
-          fetch-depth: 2 # seems to be needed by codecov
-          submodules: recursive
-
     - name: Build
       # Use a bash shell so we can use the same syntax for environment variable
       # access regardless of the host operating system
@@ -70,68 +55,16 @@ jobs:
       # Execute the build.  You can specify a specific target with "--target <NAME>"
       run: cmake --build . --config ${{ matrix.config }}
 
-  unit:
-    name: ${{ matrix.config }}
-      # The CMake configure and build commands are platform agnostic and should work equally
-      # well on Linux, Windows or Mac.
-      runs-on: ubuntu-latest
-      strategy:
-        fail-fast: false
-        matrix:
-          config: [ Release, Debug ]
-    steps:
-      - uses: actions/checkout@v2
-        with:
-          fetch-depth: 2 # seems to be needed by codecov
-          submodules: recursive
-
-    - name: UnitTesting
-      if: ${{ matrix.config == 'Debug'}}
-      # Use a bash shell so we can use the same syntax for environment variable
-      # access regardless of the host operating system
-      shell: bash
-      working-directory: ${{github.workspace}}/build_lib
-      # Execute the build.  You can specify a specific target with "--target <NAME>"
-      run: make test
-
-  install_libs:
-    name: ${{ matrix.config }}
-      # The CMake configure and build commands are platform agnostic and should work equally
-      # well on Linux, Windows or Mac.
-      runs-on: ubuntu-latest
-      strategy:
-        fail-fast: false
-        matrix:
-          config: [ Release, Debug ]
-    steps:
-      - uses: actions/checkout@v2
-        with:
-          fetch-depth: 2 # seems to be needed by codecov
-          submodules: recursive
     - name: Install
       run: |
         if ${{ matrix.config == 'Release'}}; then
-           cmake --install build_lib --prefix ${{github.workspace}}/local_install --config Release
+            cmake --install build_lib --prefix ${{github.workspace}}/local_install --config Release
         else
-          cmake --install build_lib --prefix ${{github.workspace}}/local_install --config Debug
+            cmake --install build_lib --prefix ${{github.workspace}}/local_install --config Debug
         fi
 
-  test_lib_install:
-    name: ${{ matrix.config }}
-      # The CMake configure and build commands are platform agnostic and should work equally
-      # well on Linux, Windows or Mac.
-      runs-on: ubuntu-latest
-      strategy:
-        fail-fast: false
-        matrix:
-          config: [ Release, Debug ]
-    steps:
-      - uses: actions/checkout@v2
-        with:
-          fetch-depth: 2 # seems to be needed by codecov
-          submodules: recursive
     - name: Test lib install
-      run: |  
+      run: |
         cmake -E make_directory ${{github.workspace}}/test_link
         cd ${{github.workspace}}/test_link/
         cmake -DCMAKE_PREFIX_PATH="${{github.workspace}}/local_install" -S ${{github.workspace}}/test_link -B build_exe
