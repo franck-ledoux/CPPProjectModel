@@ -72,4 +72,5 @@ jobs:
         cd ${{github.workspace}}/test_link/
         cmake -DCMAKE_PREFIX_PATH="${{github.workspace}}/local_install" -S ${{github.workspace}}/test_link -B build_exe
         cmake --build build_exe
-        ./build_exe/test_link
+        cd build_exe
+        ctest
