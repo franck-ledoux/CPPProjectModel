@@ -9,6 +9,7 @@ target_include_directories(A_TEST PRIVATE .)
 set_target_properties(A_TEST PROPERTIES
         CXX_STANDARD 14
         CXX_STANDARD_REQUIRED YES)
+
 #==============================================================================
 include(GoogleTest)
 gtest_discover_tests(A_TEST WORKING_DIRECTORY ${CMAKE_BINARY_DIR})

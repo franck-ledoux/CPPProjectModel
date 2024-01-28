@@ -14,10 +14,12 @@ option(WITH_A "component A is activated" ON)
 option(WITH_B "component B is activated" ON)
 option(ENABLE_TEST "enable unit testing" ON)
 option(ENABLE_COV "enable code coverage" ON)
+option(ENABLE_PYTHON "enable python wrapper" ON)
 #===============================================================================
 # specific macros are given in this file
+set(CMAKE_MODULE_PATH "${CMAKE_MODULE_PATH};${PROJECT_SOURCE_DIR}/cmake")
 include(GNUInstallDirs)
-include(cmake/project_macros.cmake)
+include(project_macros)
 set(INSTALL_GTEST OFF)
 #===============================================================================
 # Coverage require to run testing codes
@@ -46,6 +48,12 @@ endif()
 #===============================================================================
 prj_add_subdirectory_if(A WITH_A)
 prj_add_subdirectory_if(B WITH_B)
+
+#===============================================================================
+# Python wrapping
+if(ENABLE_PYTHON)
+    add_subdirectory(PY_API)
+endif()
 #===============================================================================
 # INSTALLATION PROCEDURE
 #===============================================================================

@@ -9,5 +9,6 @@ target_sources(${LIB_NAME} PRIVATE ${SRC_FILES})
 if(ENABLE_TEST)
     add_subdirectory(tst)
 endif()
+
 #===============================================================================
 prj_component_install(${LIB_NAME})
