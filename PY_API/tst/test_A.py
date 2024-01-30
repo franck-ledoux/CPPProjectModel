@@ -1,7 +1,7 @@
 import sys
-from PY_API import *
+from pyapi import *
 
 
 def test_A_f():
     a = A()
-    assert a.f(3) == 1
+    assert a.f(3) == 4

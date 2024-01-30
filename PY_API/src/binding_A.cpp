@@ -7,5 +7,5 @@ namespace py = pybind11;
 /*----------------------------------------------------------------------------*/
 void bind_math(py::module &m){
 	py::class_<A>(m, "A")
-	   .def("f", &A::f);
+        .def("ff", &A::f);
 }

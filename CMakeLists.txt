@@ -42,10 +42,6 @@ if(ENABLE_TEST)
     enable_testing()
 endif()
 #===============================================================================
-if(ENABLE_COV)
-    prj_activate_coverage()
-endif()
-#===============================================================================
 prj_add_subdirectory_if(A WITH_A)
 prj_add_subdirectory_if(B WITH_B)
 
@@ -53,6 +49,12 @@ prj_add_subdirectory_if(B WITH_B)
 # Python wrapping
 if(ENABLE_PYTHON)
     add_subdirectory(PY_API)
+endif()
+
+
+#===============================================================================
+if(ENABLE_COV)
+    cover(ctest)
 endif()
 #===============================================================================
 # INSTALLATION PROCEDURE

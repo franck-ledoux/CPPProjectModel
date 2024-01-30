@@ -18,28 +18,30 @@ endmacro()
 #==============================================================================
 # Coverage activation environment
 #==============================================================================
-macro(prj_activate_coverage)
-    set(CMAKE_CXX_FLAGS "-O0 -coverage")
+function(cover COVER_EXEC)
+    set(CMAKE_CXX_FLAGS "-O0 -coverage -fprofile-arcs -ftest-coverage")
     # find required tools
     find_program(LCOV lcov REQUIRED)
     find_program(GENHTML genhtml REQUIRED)
     # add coverage target
     add_custom_target(coverage
-        # gather data
-        COMMAND
-        ${LCOV} --directory . --capture --exclude '*/tst/*'  --exclude '*/*test*/*' --exclude '/usr/*'
-        --output-file coverage.info
-        # generate report
-        COMMAND ${GENHTML} --demangle-cpp -o coverage coverage.info
-        WORKING_DIRECTORY ${CMAKE_BINARY_DIR})
-endmacro()
+            # Run tests
+            COMMAND ${COVER_EXEC}
+            # gather data
+            COMMAND
+            ${LCOV} --directory . --capture --exclude '*/tst/*' --exclude '/usr/*' --output-file coverage.info
+            # generate report
+            COMMAND ${GENHTML} --demangle-cpp -o coverage coverage.info
+            WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
+            VERBATIM)
+endfunction()
 #==============================================================================
 # Conditional add of a subdirectory
 #==============================================================================
 # COMP_NAME    component name
 # COND         Boolean value to add or not COMP_NAME
-macro(prj_add_subdirectory_if COMP_NAME COND)
+function(prj_add_subdirectory_if COMP_NAME COND)
     if(${COND})
         add_subdirectory(${COMP_NAME})
     endif()
-endmacro()
+endfunction()
