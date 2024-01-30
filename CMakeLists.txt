@@ -42,6 +42,23 @@ if(ENABLE_TEST)
     enable_testing()
 endif()
 #===============================================================================
+if(ENABLE_COV)
+    include(CodeCoverage)
+    set(CMAKE_CXX_FLAGS "-g -O0 --coverage -fprofile-arcs -ftest-coverage")
+    set(CMAKE_C_FLAGS "-g -O0 --coverage -fprofile-arcs -ftest-coverage")
+    set(COVERAGE_LCOV_EXCLUDES
+            '/usr/*'
+            '${CMAKE_SOURCE_DIR}/*/tst/*'
+            '*/pybind11/*'
+            '*/gtest/*'
+            '*/googletest/*'
+    )
+    SETUP_TARGET_FOR_COVERAGE_LCOV(
+            NAME code_cover_toy
+            EXECUTABLE ctest
+    )
+endif()
+#===============================================================================
 prj_add_subdirectory_if(A WITH_A)
 prj_add_subdirectory_if(B WITH_B)
 
@@ -52,10 +69,6 @@ if(ENABLE_PYTHON)
 endif()
 
 
-#===============================================================================
-if(ENABLE_COV)
-    cover(ctest)
-endif()
 #===============================================================================
 # INSTALLATION PROCEDURE
 #===============================================================================
