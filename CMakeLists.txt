@@ -54,8 +54,8 @@ if(ENABLE_COV)
             '*/googletest/*'
     )
     SETUP_TARGET_FOR_COVERAGE_LCOV(
-            NAME code_cover_toy
-            EXECUTABLE ctest
+            NAME code_cover
+            EXECUTABLE ctest -R test_pyapi
     )
 endif()
 #===============================================================================
